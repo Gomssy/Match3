@@ -15,4 +15,16 @@ public class Piece : MonoBehaviour
     {
         
     }
+
+    public enum PieceType
+    {
+        Red,
+        Orange,
+        Yellow,
+        Green,
+        Blue,
+        Purple,
+        Spin,
+        Empty,
+    }
 }

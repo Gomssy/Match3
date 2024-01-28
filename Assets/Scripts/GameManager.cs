@@ -9,9 +9,14 @@ public class GameManager : Singleton<GameManager>
 
     public Board boardPrefab;
     public List<Board> boards = new List<Board>();
+    public GameObject[] piecePrefab;
+    private int[] initialPiece = { 4, 3, 2, 6, 5, 5, 0, 6, 2, 2, 6, 3, 6, 5, 4, 4, 2, 1, 6, 4, 6, 3, 1, 6, 5, 5, 6, 4, 3, 2 };
+
+
+    [SerializeField]
+    private GameObject boardGO;
 
     private bool[,] boardExist = new bool[max_x, max_y];
-
     private void Awake()
     {
         InitBoard();
@@ -25,6 +30,7 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     private void InitBoard()
     {
+        int idx = 0;
         for (int x = 0; x < max_x; x++)
         {
             for (int y = 0; y < max_y; y++)
@@ -41,6 +47,13 @@ public class GameManager : Singleton<GameManager>
                 if (!boardExist[x, y]) continue;
                 var board = CreateBoard(x,y);
                 boards.Add(board);
+
+                if(idx < initialPiece.Length)
+                {
+                    SpawnInitialPiece(initialPiece[idx], x, y);
+                    idx++;
+                }
+
             }
         }
     }
@@ -49,11 +62,18 @@ public class GameManager : Singleton<GameManager>
     {
         var board = Instantiate(boardPrefab);
         board._x = x; board._y = y;
-        board.transform.SetParent(transform, false);
+        board.transform.SetParent(boardGO.transform, false);
         board.transform.position = MoveBoardPos(x, y);
 
         return board;
 
+    }
+
+    private void SpawnInitialPiece(int i, int x, int y)
+    {
+        GameObject piece = Instantiate(piecePrefab[i]);
+        piece.transform.SetParent(boardGO.transform, false);
+        piece.transform.position = MoveBoardPos(x, y);
     }
 
     public Vector3 MoveBoardPos(int x, int y)

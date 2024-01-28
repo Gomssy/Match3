@@ -248,6 +248,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boardPrefab: {fileID: -3425436474028714938, guid: 9d8e2e41d9907f84f935e44eaaf5b25b, type: 3}
   boards: []
+  piecePrefab:
+  - {fileID: 3808513961952908828, guid: b5ea1fe855c7f6646bd3f68c212642a4, type: 3}
+  - {fileID: 5482917014184370408, guid: e51c3cadeda3a8f40b80810e59fb371c, type: 3}
+  - {fileID: 1218468101647286860, guid: e5f83f7e655f5f244b0d1d6c64dc626f, type: 3}
+  - {fileID: 2664326885095284883, guid: 52af524b851299e498f05e4ddd979361, type: 3}
+  - {fileID: 129897341945998369, guid: 57bd975d24a4ccb46a24ce6298e1bacc, type: 3}
+  - {fileID: 6905461418001668972, guid: cc6eccfa71b387744adb6224704f590f, type: 3}
+  boardGO: {fileID: 1275756712}
 --- !u!4 &809700051
 Transform:
   m_ObjectHideFlags: 0
@@ -346,6 +354,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1275756712
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1275756713}
+  m_Layer: 0
+  m_Name: Board
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1275756713
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1275756712}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.19339207, y: 0.3969453, z: -0.00061416626}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1684990348
 GameObject:
