@@ -9,7 +9,7 @@ public class GameManager : Singleton<GameManager>
 
     public Board boardPrefab;
     public List<Board> boards = new List<Board>();
-    public GameObject[] piecePrefab;
+    public Piece[] piecePrefab;
     private int[] initialPiece = { 4, 3, 2, 6, 5, 5, 0, 6, 2, 2, 6, 3, 6, 5, 4, 4, 2, 1, 6, 4, 6, 3, 1, 6, 5, 5, 6, 4, 3, 2 };
 
 
@@ -71,7 +71,8 @@ public class GameManager : Singleton<GameManager>
 
     private void SpawnInitialPiece(int i, int x, int y)
     {
-        GameObject piece = Instantiate(piecePrefab[i]);
+        var piece = Instantiate(piecePrefab[i]);
+        piece._x = x; piece._y = y;
         piece.transform.SetParent(boardGO.transform, false);
         piece.transform.position = MoveBoardPos(x, y);
     }

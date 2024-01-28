@@ -249,12 +249,14 @@ MonoBehaviour:
   boardPrefab: {fileID: -3425436474028714938, guid: 9d8e2e41d9907f84f935e44eaaf5b25b, type: 3}
   boards: []
   piecePrefab:
-  - {fileID: 3808513961952908828, guid: b5ea1fe855c7f6646bd3f68c212642a4, type: 3}
-  - {fileID: 5482917014184370408, guid: e51c3cadeda3a8f40b80810e59fb371c, type: 3}
-  - {fileID: 1218468101647286860, guid: e5f83f7e655f5f244b0d1d6c64dc626f, type: 3}
-  - {fileID: 2664326885095284883, guid: 52af524b851299e498f05e4ddd979361, type: 3}
-  - {fileID: 129897341945998369, guid: 57bd975d24a4ccb46a24ce6298e1bacc, type: 3}
-  - {fileID: 6905461418001668972, guid: cc6eccfa71b387744adb6224704f590f, type: 3}
+  - {fileID: 2067112641144213297, guid: b5ea1fe855c7f6646bd3f68c212642a4, type: 3}
+  - {fileID: 7233466281258187205, guid: e51c3cadeda3a8f40b80810e59fb371c, type: 3}
+  - {fileID: 4079569618020834145, guid: e5f83f7e655f5f244b0d1d6c64dc626f, type: 3}
+  - {fileID: 904312665918142910, guid: 52af524b851299e498f05e4ddd979361, type: 3}
+  - {fileID: 3006197050195457292, guid: 57bd975d24a4ccb46a24ce6298e1bacc, type: 3}
+  - {fileID: 8620017407041782337, guid: cc6eccfa71b387744adb6224704f590f, type: 3}
+  - {fileID: 4079569618020834145, guid: e8967de42e9ff374eb3da639788ccdd8, type: 3}
+  - {fileID: 0}
   boardGO: {fileID: 1275756712}
 --- !u!4 &809700051
 Transform:
