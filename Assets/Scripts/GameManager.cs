@@ -50,9 +50,14 @@ public class GameManager : Singleton<GameManager>
         var board = Instantiate(boardPrefab);
         board._x = x; board._y = y;
         board.transform.SetParent(transform, false);
-        board.transform.position = new Vector3(x,y,0);
+        board.transform.position = MoveBoardPos(x, y);
 
         return board;
 
+    }
+
+    public Vector3 MoveBoardPos(int x, int y)
+    {
+        return new Vector3((x - max_x / 2) * 1.75f, (y - max_y / 2) * 0.96f, 0f);
     }
 }
