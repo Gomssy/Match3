@@ -6,8 +6,9 @@ public class Piece : MonoBehaviour
 {
     public int _x;
     public int _y;
-    
 
+    public PieceType pieceType;
+    
     public enum PieceType
     {
         Red,
