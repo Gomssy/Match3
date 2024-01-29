@@ -94,16 +94,14 @@ public class BoardManager : Singleton<BoardManager>
         int diff_y = Mathf.Abs(coord1.y - coord2.y);
         return diff_x <= 1 && diff_y <= 2;
     }
-
-    public enum Direction
-    {
-        No,
-        Up,
-        RightUp,
-        RightDown,
-        Down,
-        LeftDown,
-        LeftUp,
-    }
-
+}
+public enum Direction
+{
+    No,
+    Up,
+    RightUp,
+    RightDown,
+    Down,
+    LeftDown,
+    LeftUp,
 }

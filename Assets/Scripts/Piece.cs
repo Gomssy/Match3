@@ -4,20 +4,19 @@ using UnityEngine;
 
 public class Piece : MonoBehaviour
 {
-    public int _x;
-    public int _y;
-
+    public Vector2Int coord;
     public PieceType pieceType;
     
-    public enum PieceType
-    {
-        Red,
-        Orange,
-        Yellow,
-        Green,
-        Blue,
-        Purple,
-        Spin,
-        Empty,
-    }
+    
+}
+public enum PieceType
+{
+    Red,
+    Orange,
+    Yellow,
+    Green,
+    Blue,
+    Purple,
+    Spin,
+    Empty,
 }
