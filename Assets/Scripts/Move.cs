@@ -5,11 +5,10 @@ using System;
 
 public class Move : MonoBehaviour
 {
-    public float speed = 20f;
+    public float speed;
     public float stopDistance = 0.1f;
     public bool isMoving = false;
     public Vector3 dest;
-    public GameObject target;
 
     private List<Vector3> nextMoves = new List<Vector3>();
     private event Action OnCompleted;
