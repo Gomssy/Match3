@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Networking.Match;
 
-public class Match : MonoBehaviour
+public class Match : Singleton<Match>
 {
-    public List<Piece> pieces => PieceManager.Inst.pieces;
     public List<Direction[]> clusterDir = new();
 
     /// <summary>
@@ -31,8 +31,6 @@ public class Match : MonoBehaviour
     private List<MatchedPiece> FindLineMatchAll(Piece piece)
     {
         var matchedPieces = new List<MatchedPiece>();
-        PieceType pieceType = piece.pieceType;
-
         foreach(var dir in Enum.GetValues(typeof(MatchDir)))
         {
             MatchDir matchDir = (MatchDir)dir;
@@ -49,56 +47,55 @@ public class Match : MonoBehaviour
     private MatchedPiece FindLineMatch(Piece piece, MatchDir matchDir)
     {
         var pieceType = piece.pieceType;
+        var startPiece = FindStartPiece(piece, matchDir);
+        Direction dir = FindEnd(matchDir);
+        var result = CheckLine(startPiece, dir);
+        if (result.Count == 0) return null;
 
+        var matchedPiece = new MatchedPiece(pieceType, MatchType.Line, matchDir, result);
+        return matchedPiece;
+    }
+
+    public Direction FindFirst(MatchDir matchDir)
+    {
+        Direction dir = Direction.No;
+        if (matchDir == MatchDir.Vertical)
+            dir = Direction.Down;
+        else if (matchDir == MatchDir.DiagonalUp)
+            dir = Direction.LeftDown;
+        else if (matchDir == MatchDir.DiagonalDown)
+            dir = Direction.LeftUp;
+
+        return dir;
+    }
+
+    public Direction FindEnd(MatchDir matchDir)
+    {
+        Direction dir = Direction.No;
+        if (matchDir == MatchDir.Vertical)
+            dir = Direction.Up;
+        else if (matchDir == MatchDir.DiagonalUp)
+            dir = Direction.RightUp;
+        else if (matchDir == MatchDir.DiagonalDown)
+            dir = Direction.RightDown;
+
+        return dir;
+    }
+
+    private Piece FindStartPiece(Piece piece, MatchDir matchDir)
+    {
         Piece startPiece = piece;
         Piece nextPiece = piece;
 
-        Direction dir;
-        switch (matchDir)
-        {
-            case MatchDir.Vertical:
-                dir = Direction.Down;
-                break;
-            case MatchDir.DiagonalUp:
-                dir = Direction.LeftDown;
-                break;
-            case MatchDir.DiagonalDown:
-                dir = Direction.LeftUp;
-                break;
-            default:
-                dir = Direction.No;
-                break;
-        }
-
-        while(true)
+        Direction dir = FindFirst(matchDir);
+        while (true)
         {
             nextPiece = PieceManager.Inst.GetAdjacentPiece(nextPiece, dir);
             if (nextPiece == null || nextPiece.pieceType != piece.pieceType)
                 break;
             startPiece = nextPiece;
         }
-
-        switch(matchDir)
-        {
-            case MatchDir.Vertical:
-                dir = Direction.Up;
-                break;
-            case MatchDir.DiagonalUp:
-                dir = Direction.RightUp;
-                break;
-            case MatchDir.DiagonalDown:
-                dir = Direction.RightDown;
-                break;
-            default:
-                dir = Direction.No;
-                break;
-        }
-
-        var result = CheckLine(startPiece, dir);
-        if (result.Count == 0) return null;
-
-        var matchedPiece = new MatchedPiece(pieceType, MatchType.Line, matchDir, result);
-        return matchedPiece;
+        return startPiece;
     }
     /// <summary>
     /// 직선으로 3개 이상 연결되어 있는지 체크
@@ -106,15 +103,14 @@ public class Match : MonoBehaviour
     private List<Vector2Int> CheckLine(Piece piece, Direction dir)
     {
         var matched = new List<Vector2Int>();
-
+        PieceType pieceType = piece.pieceType;
         int matchCount = 1;
         var nextPiece = piece;
         matched.Add(piece.coord);
-
         while(true)
         {
             nextPiece = PieceManager.Inst.GetAdjacentPiece(nextPiece, dir);
-            if (nextPiece == null || nextPiece.pieceType != piece.pieceType)
+            if (nextPiece == null || nextPiece.pieceType != pieceType)
                 break;
 
             matchCount++;
@@ -155,26 +151,25 @@ public class Match : MonoBehaviour
     private List<Vector2Int> FindClusterMatch(Piece piece, PieceType pieceType, Direction[] dirs)
     {
         var matched = new List<Vector2Int>();
-        var nextPiece = piece;
         if(piece.pieceType != pieceType) return matched;
-
         matched.Add(piece.coord);
-        foreach(var dir in dirs)
+        var nextPiece = piece;
+        for(int i = 0; i < dirs.Length; i++)
         {
-            nextPiece = PieceManager.Inst.GetAdjacentPiece(piece, dir);
+            nextPiece = PieceManager.Inst.GetAdjacentPiece(piece, dirs[i]);
             if(nextPiece == null || nextPiece.pieceType != pieceType)
             {
                 matched.Clear();
                 return matched;
             }
-            matched.Add(piece.coord);
+            matched.Add(nextPiece.coord);
         }
         return matched;
     }
     public List<MatchedPiece> CheckPieceAll()
     {
         var res = new List<MatchedPiece>();
-        foreach (var piece in pieces)
+        foreach (var piece in PieceManager.Inst.pieces)
         {
             var checkResult = CheckPiece(piece);
             if (checkResult != null)
@@ -184,7 +179,6 @@ public class Match : MonoBehaviour
         }
         return res;
     }
-
     public List<MatchedPiece> CheckPiece(Piece piece)
     {
         var pieceType = piece.pieceType;

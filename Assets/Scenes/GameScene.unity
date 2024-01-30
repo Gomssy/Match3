@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca791254bb9dc694db4df3d0181c070b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pieces: []
 --- !u!4 &681372179
 Transform:
   m_ObjectHideFlags: 0
@@ -165,7 +166,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
@@ -355,6 +356,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1013619367}
   - component: {fileID: 1013619366}
+  - component: {fileID: 1013619368}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -384,6 +386,9 @@ MonoBehaviour:
   - {fileID: 4079569618020834145, guid: e8967de42e9ff374eb3da639788ccdd8, type: 3}
   - {fileID: 0}
   initialPiece: 040000000300000002000000060000000500000005000000000000000600000002000000020000000600000003000000060000000500000004000000040000000200000001000000060000000400000006000000030000000100000006000000050000000500000006000000040000000300000002000000
+  selected: {fileID: 0}
+  matchedPieces: []
+  isDragging: 1
 --- !u!4 &1013619367
 Transform:
   m_ObjectHideFlags: 0
@@ -397,8 +402,20 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1013619368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1013619365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7a4ebf7126162c48bde65079af5168c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1392914358
 GameObject:
   m_ObjectHideFlags: 0
@@ -444,7 +461,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1684990348
 GameObject:
@@ -512,5 +529,5 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

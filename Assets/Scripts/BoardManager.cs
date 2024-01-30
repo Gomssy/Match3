@@ -12,7 +12,7 @@ public class BoardManager : Singleton<BoardManager>
     public List<Board> boards = new List<Board>();
 
     private bool[,] boardExist = new bool[max_x, max_y];
-    public Direction[] directions = { Direction.Up, Direction.RightUp, Direction.RightDown, Direction.Down, Direction.LeftDown, Direction.LeftUp };
+    public Direction[] directions = new Direction[6] { Direction.Up, Direction.RightUp, Direction.RightDown, Direction.Down, Direction.LeftDown, Direction.LeftUp };
     private void Awake()
     {
         InitBoard();
@@ -93,6 +93,25 @@ public class BoardManager : Singleton<BoardManager>
         int diff_x = Mathf.Abs(coord1.x - coord2.x);
         int diff_y = Mathf.Abs(coord1.y - coord2.y);
         return diff_x <= 1 && diff_y <= 2;
+    }
+
+    public Direction FindDirection(Vector3 start, Vector3 end)
+    {
+        Vector3 dir = end - start;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        if (angle < 0f) angle += 360f;
+
+        if (angle <= 60f)
+            return Direction.RightUp;
+        if (angle <= 120f)
+            return Direction.Up;
+        if (angle <= 180f)
+            return Direction.LeftUp;
+        if (angle <= 240f)
+            return Direction.LeftDown;
+        if (angle <= 300f)
+            return Direction.Down;
+        return Direction.RightDown;
     }
 }
 public enum Direction

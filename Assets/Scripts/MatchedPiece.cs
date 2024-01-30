@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class MatchedPiece : MonoBehaviour
+[System.Serializable]
+public class MatchedPiece
 {
     public PieceType pieceType;
     public MatchType matchType;
