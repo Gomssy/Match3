@@ -182,7 +182,8 @@ public class Match : Singleton<Match>
     public List<MatchedPiece> CheckPiece(Piece piece)
     {
         var pieceType = piece.pieceType;
-
+        if(Piece.obstacleType.Exists(x => x == pieceType)) return new List<MatchedPiece>();
+        if(Piece.itemType.Exists(x=>x==pieceType)) return new List<MatchedPiece>();
         var lineMatch = FindLineMatchAll(piece);
         var clusterMatch = FindClusterMatchAll(piece);
 

@@ -52,13 +52,13 @@ public class BoardManager : Singleton<BoardManager>
         var board = Instantiate(boardPrefab);
         board._x = x; board._y = y;
         board.transform.SetParent(transform, false);
-        board.transform.position = MoveBoardPos(x, y);
+        board.transform.position = GetWorldPos(x, y);
 
         return board;
 
     }
 
-    public Vector3 MoveBoardPos(int x, int y)
+    public Vector3 GetWorldPos(int x, int y)
     {
         return new Vector3((x - max_x / 2) * 1.75f, (y - max_y / 2) * 0.96f, 0f);
     }

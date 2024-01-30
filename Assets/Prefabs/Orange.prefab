@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2232856073030928710}
   - component: {fileID: 7233466281258187205}
   - component: {fileID: 3608041182673316730}
+  - component: {fileID: 8022684642838911960}
   m_Layer: 0
   m_Name: Orange
   m_TagString: Untagged
@@ -98,8 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0bf7512594d22740bee0dee9fdea7ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _x: 0
-  _y: 0
+  coord: {x: 0, y: 0}
   pieceType: 1
 --- !u!60 &3608041182673316730
 PolygonCollider2D:
@@ -134,3 +134,20 @@ PolygonCollider2D:
       - {x: 1.125, y: -0.175}
       - {x: 1.125, y: 0.085}
       - {x: 0.72499996, y: 0.97499996}
+--- !u!114 &8022684642838911960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5482917014184370408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 065c064d3ad2813459f6919464b59b71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 10
+  stopDistance: 0.1
+  isMoving: 0
+  dest: {x: 0, y: 0, z: 0}
+  target: {fileID: 0}

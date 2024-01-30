@@ -29,9 +29,7 @@ public class GameManager : Singleton<GameManager>
                 selected = hit.collider.gameObject.GetComponent<Piece>();
                 StartCoroutine(Drag(selected.transform.position));
             }
-        }
-
-        
+        }        
     }
 
     IEnumerator Drag(Vector3 pos)
@@ -51,12 +49,20 @@ public class GameManager : Singleton<GameManager>
                 var selectInfo = Match.Inst.CheckPiece(selected);
                 var targetInfo = Match.Inst.CheckPiece(target);
                 matchedPieces = selectInfo.Concat(targetInfo).Distinct().ToList();
-
                 if(matchedPieces.Count == 0 )
                 {
                     PieceManager.Inst.UndoSwap();
                     break;
                 }
+
+                while(true)
+                {
+                    if (matchedPieces.Count == 0) break;
+                    PieceManager.Inst.DestroyPiece(matchedPieces.SelectMany(x=>x.coords).ToList());
+                    yield return StartCoroutine(PieceManager.Inst.SpawnNewPiece());
+                    matchedPieces = Match.Inst.CheckPieceAll();
+                }
+
                 break;
             }
 
