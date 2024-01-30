@@ -15,6 +15,12 @@ public class Piece : MonoBehaviour
         move = GetComponent<Move>();
     }
 
+    public virtual void DestroyThis()
+    {
+        PieceManager.Inst.pieces.Remove(this);
+        Destroy(this.gameObject);
+    }
+
     public void Drop(Vector2Int target)
     {
         //아래로 쭉 떨어지는 경우

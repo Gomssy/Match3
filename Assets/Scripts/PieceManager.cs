@@ -144,8 +144,7 @@ public class PieceManager : Singleton<PieceManager>
             var obstaclePiece = FindPiece(obstacle);
             if (obstaclePiece != null)
             {
-                pieces.Remove(obstaclePiece);
-                Destroy(obstaclePiece.gameObject);
+                obstaclePiece.DestroyThis();
             }
         }
 
@@ -153,8 +152,7 @@ public class PieceManager : Singleton<PieceManager>
         {
             var targetPiece = FindPiece(target);
             if (targetPiece == null) continue;
-            pieces.Remove(targetPiece);
-            Destroy(targetPiece.gameObject);
+            targetPiece.DestroyThis();
         }
     }
 
