@@ -15,13 +15,13 @@ public class Piece : MonoBehaviour
         move = GetComponent<Move>();
     }
 
-    public void DropPiece(Vector2Int target)
+    public void Drop(Vector2Int target)
     {
         //아래로 쭉 떨어지는 경우
         if(coord.x == target.x)
         {
             var pos = BoardManager.Inst.GetWorldPos(target.x, target.y);
-            MovePiece(pos);
+            Move(pos);
         }
         //대각선 아래로 떨어지는 경우
         else
@@ -40,13 +40,13 @@ public class Piece : MonoBehaviour
         coord = target;
     }
 
-    public void MovePiece(Vector3 pos)
+    public void Move(Vector3 pos)
     {
         move.MovePiece(pos);
     }
 
     /// <summary>
-    /// 대각선 이동 경유지 설정
+    /// 대각선 이동 경로 설정
     /// </summary>
     /// <param name="coord"></param>
     /// <param name="target"></param>

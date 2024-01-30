@@ -59,7 +59,7 @@ public class PieceManager : Singleton<PieceManager>
                 if(fillPiece != null)
                 {
                     filling = true;
-                    fillPiece.DropPiece(new Vector2Int(emptyBoard._x, emptyBoard._y));
+                    fillPiece.Drop(new Vector2Int(emptyBoard._x, emptyBoard._y));
                 }
             }
             if (!filling)
@@ -72,7 +72,7 @@ public class PieceManager : Singleton<PieceManager>
             if (pieces.Count == 30) break;
             var emptyCoord = FindEmpty();
 
-            spawnPiece.DropPiece(emptyCoord);
+            spawnPiece.Drop(emptyCoord);
             yield return new WaitForSeconds(0.3f);
         }
         yield return new WaitForSeconds(0.7f);
@@ -89,7 +89,7 @@ public class PieceManager : Singleton<PieceManager>
         piece.coord = spawnCoord;
         piece.transform.SetParent(transform, false);
         piece.transform.position = BoardManager.Inst.GetWorldPos(spawnCoord.x, spawnCoord.y) + new Vector3(0f, 2f, 0f);
-        piece.MovePiece(BoardManager.Inst.GetWorldPos(spawnCoord.x, spawnCoord.y));
+        piece.Move(BoardManager.Inst.GetWorldPos(spawnCoord.x, spawnCoord.y));
         pieces.Add(piece);
 
         return piece;
@@ -138,13 +138,41 @@ public class PieceManager : Singleton<PieceManager>
 
     public void DestroyPiece(List<Vector2Int> targets)
     {
-        for(int i = 0; i < targets.Count; i++)
+        var obstacles = FindObstacles(targets);
+        foreach (var obstacle in obstacles)
         {
-            var targetPiece = FindPiece(targets[i]);
+            var obstaclePiece = FindPiece(obstacle);
+            if (obstaclePiece != null)
+            {
+                pieces.Remove(obstaclePiece);
+                Destroy(obstaclePiece.gameObject);
+            }
+        }
+
+        foreach (var target in targets)
+        {
+            var targetPiece = FindPiece(target);
             if (targetPiece == null) continue;
             pieces.Remove(targetPiece);
             Destroy(targetPiece.gameObject);
         }
+    }
+
+    private List<Vector2Int> FindObstacles(List<Vector2Int> targets)
+    {
+        var obstacles = new List<Vector2Int>();
+        foreach (var target in targets)
+        {
+            foreach (var coord in BoardManager.Inst.GetAllAdjacent(target.x, target.y))
+            {
+                var piece = FindPiece(coord);
+                if (piece != null && piece.pieceType == PieceType.Top && !obstacles.Contains(piece.coord))
+                {
+                    obstacles.Add(piece.coord);
+                }
+            }
+        }
+        return obstacles;
     }
 
 

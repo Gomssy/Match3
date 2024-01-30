@@ -6,7 +6,7 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     public Piece[] piecePrefab;
-    public int[] initialPiece = { 4, 3, 2, 6, 5, 5, 0, 6, 2, 2, 6, 3, 6, 5, 4, 4, 2, 1, 6, 4, 6, 3, 1, 6, 5, 5, 6, 4, 3, 2 };
+    public int[] initialPiece = { 4,3,2,6,5,5,6,6,2,0,3,6,6,5,6,0,3,4,6,0,3,4,6,6,5,5,6,4,3,2 };
 
     [SerializeField]
     private Piece selected;
