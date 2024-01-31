@@ -154,11 +154,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   topCount: {fileID: 1458435637}
   moveCount: {fileID: 1133847095}
+  currentScore: {fileID: 689040888}
   background: {fileID: 1188570486}
   Panel: {fileID: 1986948962}
   retryButton: {fileID: 815922321}
   exitButton: {fileID: 2075454687}
-  score: {fileID: 874712079}
+  endScore: {fileID: 874712079}
 --- !u!4 &472173456
 Transform:
   m_ObjectHideFlags: 0
@@ -1621,7 +1622,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1986948963
 RectTransform:
   m_ObjectHideFlags: 0
