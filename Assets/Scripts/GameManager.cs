@@ -9,6 +9,7 @@ public class GameManager : Singleton<GameManager>
     public int[] initialPiece = { 4,3,2,6,5,5,6,6,2,0,3,6,6,5,6,0,3,4,6,0,3,4,6,6,5,5,6,4,3,2 };
     public int topCount = 10;
     public int moveCount = 20;
+    public int totalScore = 0;
 
     [SerializeField]
     private Piece selected;
@@ -17,21 +18,27 @@ public class GameManager : Singleton<GameManager>
     [SerializeField]
     private bool isDragging = true;
 
+    private bool isGameEnd = false;
+    private bool cleared = false;
+
     private void Update()
     {
-        if (!isDragging) return;
-        if (selected != null) return;
-        if(Input.GetMouseButtonDown(0))
+        if(!isGameEnd)
         {
-            var mp = GetMouseWorldPos();
-            RaycastHit2D hit = Physics2D.Raycast(mp, Vector2.zero);
-
-            if(hit.collider != null && hit.collider.gameObject.GetComponent<Piece>() != null )
+            if (!isDragging) return;
+            if (selected != null) return;
+            if (Input.GetMouseButtonDown(0))
             {
-                selected = hit.collider.gameObject.GetComponent<Piece>();
-                StartCoroutine(Drag(selected.transform.position));
+                var mp = GetMouseWorldPos();
+                RaycastHit2D hit = Physics2D.Raycast(mp, Vector2.zero);
+
+                if (hit.collider != null && hit.collider.gameObject.GetComponent<Piece>() != null)
+                {
+                    selected = hit.collider.gameObject.GetComponent<Piece>();
+                    StartCoroutine(Drag(selected.transform.position));
+                }
             }
-        }
+        }        
     }
 
     IEnumerator Drag(Vector3 pos)
@@ -70,6 +77,12 @@ public class GameManager : Singleton<GameManager>
 
             yield return null;
         }
+        if(topCount == 0 || moveCount == 0)
+        {
+            isGameEnd = true;
+            if(topCount == 0) cleared = true;
+            EndGame();
+        }
 
         selected = null;
         isDragging = true;
@@ -79,5 +92,11 @@ public class GameManager : Singleton<GameManager>
     {
         var mp = Input.mousePosition;
         return Camera.main.ScreenToWorldPoint(mp);
+    }
+
+    public void EndGame()
+    {
+        Debug.Log("Game End");
+        CanvasManager.Inst.ActivateWinPanel();
     }
 }

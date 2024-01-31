@@ -9,6 +9,7 @@ public class Piece : MonoBehaviour
     public static List<PieceType> obstacleType = new List<PieceType>() { PieceType.Top};
     public static List<PieceType> itemType = new List<PieceType>() { PieceType.Line, PieceType.TNT, PieceType.Color };
     private Move move;
+    public int score;
 
     private void Awake()
     {
@@ -17,6 +18,7 @@ public class Piece : MonoBehaviour
 
     public virtual void DestroyThis()
     {
+        GameManager.Inst.totalScore += this.score;
         PieceManager.Inst.pieces.Remove(this);
         Destroy(this.gameObject);
     }

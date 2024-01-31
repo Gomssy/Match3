@@ -153,6 +153,7 @@ public class PieceManager : Singleton<PieceManager>
             if (targetPiece == null) continue;
             targetPiece.DestroyThis();
         }
+        CanvasManager.Inst.SetScoreText();
     }
 
     private List<Vector2Int> FindObstacles(List<Vector2Int> targets)
