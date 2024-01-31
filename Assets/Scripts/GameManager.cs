@@ -8,6 +8,7 @@ public class GameManager : Singleton<GameManager>
     public Piece[] piecePrefab;
     public int[] initialPiece = { 4,3,2,6,5,5,6,6,2,0,3,6,6,5,6,0,3,4,6,0,3,4,6,6,5,5,6,4,3,2 };
     public int topCount = 10;
+    public int moveCount = 20;
 
     [SerializeField]
     private Piece selected;
@@ -55,22 +56,20 @@ public class GameManager : Singleton<GameManager>
                     yield return StartCoroutine(PieceManager.Inst.UndoSwap());
                     break;
                 }
-
-                while(true)
+                moveCount--;
+                CanvasManager.Inst.SetMoveCountText();
+                while (true)
                 {
                     if (matchedPieces.Count == 0) break;
                     PieceManager.Inst.DestroyPiece(matchedPieces.SelectMany(x=>x.coords).ToList());
                     yield return StartCoroutine(PieceManager.Inst.SpawnNewPiece());
                     matchedPieces = Match.Inst.CheckPieceAll();
                 }
-
                 break;
             }
 
             yield return null;
         }
-        if (topCount == 0)
-            Debug.Log("Win");
 
         selected = null;
         isDragging = true;

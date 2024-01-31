@@ -19,6 +19,7 @@ public class TopPiece : Piece
             return;
         }
         GameManager.Inst.topCount--;
+        CanvasManager.Inst.SetTopCountText();
         PieceManager.Inst.pieces.Remove(this);
         Destroy(this.gameObject);
     }

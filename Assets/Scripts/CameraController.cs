@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    private float targetAspect = 10f / 20f;
     void Start()
     {
         AdjustCamera();
