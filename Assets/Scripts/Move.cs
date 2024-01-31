@@ -11,13 +11,15 @@ public class Move : MonoBehaviour
     public Vector3 dest;
 
     private List<Vector3> nextMoves = new List<Vector3>();
-    private event Action OnCompleted;
-
+    private List<Action> actions = new List<Action>();
 
     public void MovePiece(Vector3 _destination, Action action = null)
     {
         dest = _destination;
-        OnCompleted += action;
+        if (action != null)
+        {
+            actions.Add(action);
+        }
         isMoving = true;
     }
 
@@ -32,13 +34,13 @@ public class Move : MonoBehaviour
     public void Stop()
     {
         isMoving = false;
-        OnCompleted = null;
+        actions.Clear();
     }
 
     private void Update()
     {
         if (!isMoving) return;
-        //목표지점까지 이동
+
         transform.position = Vector3.MoveTowards(transform.position, dest, speed * Time.deltaTime);
 
         if (Vector3.Distance(transform.position, dest) < stopDistance)
@@ -46,7 +48,10 @@ public class Move : MonoBehaviour
             if (nextMoves.Count == 0)
             {
                 transform.position = dest;
-                OnCompleted?.Invoke();
+                foreach (var action in actions)
+                {
+                    action?.Invoke();
+                }
                 Stop();
                 return;
             }
@@ -57,6 +62,5 @@ public class Move : MonoBehaviour
                 return;
             }
         }
-        
     }
 }
