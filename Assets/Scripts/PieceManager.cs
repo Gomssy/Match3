@@ -112,26 +112,25 @@ public class PieceManager : Singleton<PieceManager>
         return coords[0];
     }
 
-    public void SwapPiece(Piece piece1, Piece piece2)
+    public IEnumerator SwapPiece(Piece piece1, Piece piece2)
     {
         if (piece1.coord == piece2.coord)
             throw new Exception("Same Piece");
-        Debug.Log("Swap: " + piece1.coord + " " + piece2.coord);
         tempPieces[0] = piece1;
         tempPieces[1] = piece2;
         Vector2Int temp = piece1.coord;
+        piece1.Move(BoardManager.Inst.GetWorldPos(piece2.coord.x, piece2.coord.y));
+        piece2.Move(BoardManager.Inst.GetWorldPos(piece1.coord.x, piece1.coord.y));
+        yield return new WaitUntil(() => !piece1.IsMoving() && !piece2.IsMoving());
         piece1.coord = piece2.coord;
-        piece1.transform.position = BoardManager.Inst.GetWorldPos(piece1.coord.x, piece1.coord.y);
-
         piece2.coord = temp;
-        piece2.transform.position = BoardManager.Inst.GetWorldPos(piece2.coord.x, piece2.coord.y);
 
     }
-    public void UndoSwap()
+    public IEnumerator UndoSwap()
     {
         Debug.Log("Undo Swap");
-        if (tempPieces[0] == null || tempPieces[1] == null) return;
-        SwapPiece(tempPieces[0], tempPieces[1]);
+        if (tempPieces[0] == null || tempPieces[1] == null) yield break;
+        yield return StartCoroutine(SwapPiece(tempPieces[0], tempPieces[1]));
         tempPieces[0] = null;
         tempPieces[1] = null;
     }

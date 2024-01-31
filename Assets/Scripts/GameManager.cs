@@ -7,6 +7,7 @@ public class GameManager : Singleton<GameManager>
 {
     public Piece[] piecePrefab;
     public int[] initialPiece = { 4,3,2,6,5,5,6,6,2,0,3,6,6,5,6,0,3,4,6,0,3,4,6,6,5,5,6,4,3,2 };
+    public int topCount = 10;
 
     [SerializeField]
     private Piece selected;
@@ -29,7 +30,7 @@ public class GameManager : Singleton<GameManager>
                 selected = hit.collider.gameObject.GetComponent<Piece>();
                 StartCoroutine(Drag(selected.transform.position));
             }
-        }        
+        }
     }
 
     IEnumerator Drag(Vector3 pos)
@@ -45,13 +46,13 @@ public class GameManager : Singleton<GameManager>
                 Direction dir = BoardManager.Inst.FindDirection(pos, mp);
                 Piece target = PieceManager.Inst.GetAdjacentPiece(selected, dir);
                 if (target == null) break;
-                PieceManager.Inst.SwapPiece(selected, target);
+                yield return StartCoroutine(PieceManager.Inst.SwapPiece(selected, target));
                 var selectInfo = Match.Inst.CheckPiece(selected);
                 var targetInfo = Match.Inst.CheckPiece(target);
                 matchedPieces = selectInfo.Concat(targetInfo).Distinct().ToList();
                 if(matchedPieces.Count == 0 )
                 {
-                    PieceManager.Inst.UndoSwap();
+                    yield return StartCoroutine(PieceManager.Inst.UndoSwap());
                     break;
                 }
 
@@ -68,6 +69,8 @@ public class GameManager : Singleton<GameManager>
 
             yield return null;
         }
+        if (topCount == 0)
+            Debug.Log("Win");
 
         selected = null;
         isDragging = true;

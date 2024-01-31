@@ -51,6 +51,11 @@ public class Piece : MonoBehaviour
         move.MovePiece(pos);
     }
 
+    public bool IsMoving()
+    {
+        return move.isMoving;
+    }
+
     /// <summary>
     /// 대각선 이동 경로 설정
     /// </summary>
